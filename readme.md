@@ -23,7 +23,7 @@ iframe.create(document.getElementById('parent'));
 // insertion into an iframe.
 var dummyDom = new liveframe.DummyDom();
 
-var doc = '<!DOCTYPE html><html><head><title>My iframe</title></head><body></body></html>';
+var doc = '<!DOCTYPE html><html><head><title>My iframe</title></head><body><button></button></body></html>';
 
 // Methods can be chained
 dummyDom
@@ -34,7 +34,9 @@ dummyDom
     .addScriptHead(null, {src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'})
     // This below style/script could be pulled from your live code editor on keyup etc.
     .addStyle('p {color:red; padding-left:50px;}')
-    .addScriptBody('$(document).ready(function(){$("body").append("<p>Red text</p>");});')
+    // If you're manipulating an iframe directly you'll likely run in to problems with the
+    // ready event, and you'll have to manually remove event handlers etc.
+    .addScriptBody('$(document).ready(function(){$("button").click(function(){console.log("test");)});});')
 ;
 
 // Write to the iframe
