@@ -9,7 +9,7 @@ Pure javascript, no jQuery required.
 Use case
 --------
 
-Let's say you're creating a live code editor and you want to display the user's input in an iframe:
+Let's say you're creating a live code environment and you want to display the user's input in an iframe:
 
 ```javascript
 // The 'iframe' object here provides helper functions for creating/updating an iframe
@@ -33,8 +33,8 @@ dummyDom
     // will be called from cache by the browser
     .addScriptHead(null, {src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'})
     // This below style/script could be pulled from your live code editor on keyup etc.
-    .addStyle('p {color:red; padding-left:' + count + 'px;}')
-    .addScriptBody('$(document).ready(function(){$("body").append("<p>' + count + '</p>");});')
+    .addStyle('p {color:red; padding-left:50px;}')
+    .addScriptBody('$(document).ready(function(){$("body").append("<p>Red text</p>");});')
 ;
 
 // Write to the iframe
