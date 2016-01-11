@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Liveframe Example</title>
+    </head>
+
+    <body>
+
+        <div id="parent"><!--iframe will go here--></div>
+
+        <script src="liveframe.js"></script>
+        <script type="text/javascript">
+            (function(){
+
+                // The 'iframe' object here provides helper functions for creating/updating an iframe
+                var iframe = new liveframe.Controller();
+
+                // Start by creating an actual iframe in the DOM (supply an element node, not a jQuery object)
+                iframe.create(document.getElementById('parent'));
+
+                // The 'dummyDom' object is a library of helpers for manipulating an HTML document in preparation for
+                // insertion into an iframe.
+                var dummyDom = new liveframe.DummyDom();
+
+                // I'm using a loop to demonstrate how the iframe can easily be manipulated over time
+                var count = 0;
+                var loop = setInterval(function(){
+                    count++;
+
+                    var doc = '<!DOCTYPE html><html><head><title>My iframe</title></head><body>Liveframe Example</body></html>';
+
+                    // Methods can be chained
+                    dummyDom
+                        // Initialise it with a string representation of a complete HTML document.
+                        .html(doc)
+                        // One advantage of adding a script like this, rather than to a "live" iframe is that it
+                        // will be called from cache by the browser
+                        .addScriptHead(null, {src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'})
+                        .addStyle('p {color:red; padding-left:' + count + 'px;}')
+                        .addScriptBody('$(document).ready(function(){$("body").append("<p>' + count + '</p>");});')
+                    ;
+
+                    // Put into the iframe
+                    iframe.write(dummyDom.html());
+
+                    if (count >= 50) {
+                        clearInterval(loop);
+                    }
+
+                }, 100);
+
+            })();
+        </script>
+
+    </body>
+</html>
