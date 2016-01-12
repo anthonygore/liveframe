@@ -104,6 +104,20 @@
             return appendElementHead(style)
         };
 
+        // Find and replace
+        this.findAndReplace = function (tag, callback) {
+            var dummy = document.createElement('html');
+            dummy.innerHTML = context.state;
+            var collection = dummy.getElementsByTagName(tag);
+            for (var index in collection) {
+                if (collection.hasOwnProperty(index)) {
+                    callback(collection[index]);
+                }
+            }
+            context.state = dummy.innerHTML;
+            return context;
+        }
+
     };
 
 
