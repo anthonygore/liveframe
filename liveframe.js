@@ -111,7 +111,9 @@
             var collection = dummy.getElementsByTagName(tag);
             for (var index in collection) {
                 if (collection.hasOwnProperty(index)) {
-                    callback(collection[index]);
+                    if (index !== 'length') {
+                        callback(collection[index]);
+                    }
                 }
             }
             context.state = dummy.innerHTML;
