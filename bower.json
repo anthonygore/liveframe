@@ -23,5 +23,8 @@
     "tests",
     "index.html",
     ".gitignore"
-  ]
+  ],
+  "dependencies": {
+    "qunit": "^1.21.0"
+  }
 }
