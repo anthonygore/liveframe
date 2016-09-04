@@ -24,7 +24,7 @@
     "index.html",
     ".gitignore"
   ],
-  "dependencies": {
+  "dev-dependencies": {
     "qunit": "^1.21.0"
   }
 }
