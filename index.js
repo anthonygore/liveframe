@@ -1,12 +1,12 @@
 "use strict";
 
 define(function (require, exports, module) {
-	
+
 	module.exports = function(el) {
 
 		// Create and attach the iframe
 		this.iframe = document.createElement('iframe');
-		parentElement.appendChild(el);
+		el.appendChild(this.iframe);
 
 		// Write to the iframe
 		this.write = (html) => {
@@ -53,14 +53,14 @@ define(function (require, exports, module) {
 		this.addScript = (scriptContent, scriptAttributes, isBody) => {
 			// Create script element
 			var script = document.createElement('script');
-			script = setAttributes(script, scriptAttributes);
+			script = this.setAttributes(script, scriptAttributes);
 			if (scriptContent != null) {
 				script.textContent = scriptContent;
 			}
 			if (isBody) {
-				return appendElementBody(script)
+				return this.appendElementBody(script)
 			} else {
-				return appendElementHead(script)
+				return this.appendElementHead(script)
 			}
 		};
 
@@ -69,7 +69,7 @@ define(function (require, exports, module) {
 			if (typeof scriptAttributes === "undefined") {
 				scriptAttributes = {};
 			}
-			return addScript(scriptContent, scriptAttributes, false);
+			return this.addScript(scriptContent, scriptAttributes, false);
 		};
 
 		// Add script to body
@@ -77,7 +77,7 @@ define(function (require, exports, module) {
 			if (typeof scriptAttributes === "undefined") {
 				scriptAttributes = {};
 			}
-			return addScript(scriptContent, scriptAttributes, true);
+			return this.addScript(scriptContent, scriptAttributes, true);
 		};
 
 		// Add style
@@ -85,7 +85,7 @@ define(function (require, exports, module) {
 			// Create style element
 			var style = document.createElement('style');
 			style.textContent = cssString;
-			return appendElementHead(style)
+			return this.appendElementHead(style)
 		};
 
 		// Find and replace
