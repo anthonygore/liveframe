@@ -4,6 +4,8 @@ define(function (require, exports, module) {
 
 	module.exports = function(el) {
 
+		//TODO: The .html method should be renamed. The .write method should have a public wrapper.
+
 		// Create and attach the iframe
 		this.iframe = document.createElement('iframe');
 		el.appendChild(this.iframe);
@@ -17,14 +19,6 @@ define(function (require, exports, module) {
 		};
 
 		this.state = '';
-
-		this.html = (html) => {
-			if (typeof(html) === 'undefined') {
-				return this.state;
-			}
-			this.state = html;
-			return this;
-		};
 
 		this.setAttributes = (elem, attrs) => {
 			for (var key in attrs) {
@@ -64,6 +58,32 @@ define(function (require, exports, module) {
 			}
 		};
 
+		// Find and replace
+		this.findAndReplace = (tag, callback) => {
+			var dummy = document.createElement('html');
+			dummy.innerHTML = this.state;
+			var collection = dummy.getElementsByTagName(tag);
+			for (var index in collection) {
+				if (collection.hasOwnProperty(index)) {
+					if (index !== 'length') {
+						callback(collection[index]);
+					}
+				}
+			}
+			this.state = dummy.innerHTML;
+			return this;
+		};
+
+		/* PUBLIC API */
+
+		this.html = (html) => {
+			if (typeof(html) === 'undefined') {
+				return this.state;
+			}
+			this.state = html;
+			return this;
+		};
+
 		// Add script to head
 		this.addScriptHead = (scriptContent, scriptAttributes) => {
 			if (typeof scriptAttributes === "undefined") {
@@ -88,20 +108,18 @@ define(function (require, exports, module) {
 			return this.appendElementHead(style)
 		};
 
-		// Find and replace
-		this.findAndReplace = (tag, callback) => {
-			var dummy = document.createElement('html');
-			dummy.innerHTML = this.state;
-			var collection = dummy.getElementsByTagName(tag);
-			for (var index in collection) {
-				if (collection.hasOwnProperty(index)) {
-					if (index !== 'length') {
-						callback(collection[index]);
-					}
-				}
+		this.addFile = (data, type) => {
+			switch(type) {
+				case 'html':
+					this.html(data);
+					break;
+				case 'css':
+					this.addStyle(data);
+					break;
+				case 'js':
+					this.addScriptBody(data);
+					break;
 			}
-			this.state = dummy.innerHTML;
-			return this;
 		};
 
 		return this;
