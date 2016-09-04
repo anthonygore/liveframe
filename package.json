@@ -1,0 +1,25 @@
+{
+  "name": "liveframe",
+  "version": "0.1.0",
+  "description": "A simple javascript library to help with manipulation of an iframe. It works by making edits in a dummy DOM before inserting it into the iframe and re-rendering.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonygore/liveframe.git"
+  },
+  "keywords": [
+    "iframe"
+  ],
+  "author": "Anthony Gore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anthonygore/liveframe/issues"
+  },
+  "homepage": "https://github.com/anthonygore/liveframe#readme"
+}
