@@ -3,6 +3,7 @@
 define(function (require, exports, module) {
 
 	module.exports = function (el) {
+		var _this = this;
 
 		//TODO: The .html method should be renamed. The .write method should have a public wrapper.
 		//TODO: Update with ES6 syntax
@@ -14,57 +15,57 @@ define(function (require, exports, module) {
 		el.appendChild(this.iframe);
 
 		// Write to the iframe
-		this.write = html => {
-			this.iframe.contentWindow.document.open("text/html", "replace");
-			this.iframe.contentWindow.document.write(html); // Rendering starts during/after the write() command (depending on browser)
-			this.iframe.contentWindow.document.close(); // Rendering is not necessarily finished when close() is called
-			return this;
+		this.write = function (html) {
+			_this.iframe.contentWindow.document.open("text/html", "replace");
+			_this.iframe.contentWindow.document.write(html); // Rendering starts during/after the write() command (depending on browser)
+			_this.iframe.contentWindow.document.close(); // Rendering is not necessarily finished when close() is called
+			return _this;
 		};
 
 		this.state = '';
 
-		this.setAttributes = (elem, attrs) => {
+		this.setAttributes = function (elem, attrs) {
 			for (var key in attrs) {
 				elem.setAttribute(key, attrs[key]);
 			}
 			return elem;
 		};
 
-		this.appendElementHead = elem => {
+		this.appendElementHead = function (elem) {
 			var dummy = document.createElement('html');
-			dummy.innerHTML = this.state;
+			dummy.innerHTML = _this.state;
 			dummy.getElementsByTagName('head')[0].appendChild(elem);
-			this.state = dummy.innerHTML;
-			return this;
+			_this.state = dummy.innerHTML;
+			return _this;
 		};
 
-		this.appendElementBody = elem => {
+		this.appendElementBody = function (elem) {
 			var dummy = document.createElement('html');
-			dummy.innerHTML = this.state;
+			dummy.innerHTML = _this.state;
 			dummy.getElementsByTagName('body')[0].appendChild(elem);
-			this.state = dummy.innerHTML;
-			return this;
+			_this.state = dummy.innerHTML;
+			return _this;
 		};
 
 		// Add script to HTML
-		this.addScript = (scriptContent, scriptAttributes, isBody) => {
+		this.addScript = function (scriptContent, scriptAttributes, isBody) {
 			// Create script element
 			var script = document.createElement('script');
-			script = this.setAttributes(script, scriptAttributes);
+			script = _this.setAttributes(script, scriptAttributes);
 			if (scriptContent != null) {
 				script.textContent = scriptContent;
 			}
 			if (isBody) {
-				return this.appendElementBody(script);
+				return _this.appendElementBody(script);
 			} else {
-				return this.appendElementHead(script);
+				return _this.appendElementHead(script);
 			}
 		};
 
 		// Find and replace
-		this.findAndReplace = (tag, callback) => {
+		this.findAndReplace = function (tag, callback) {
 			var dummy = document.createElement('html');
-			dummy.innerHTML = this.state;
+			dummy.innerHTML = _this.state;
 			var collection = dummy.getElementsByTagName(tag);
 			for (var index in collection) {
 				if (collection.hasOwnProperty(index)) {
@@ -73,54 +74,54 @@ define(function (require, exports, module) {
 					}
 				}
 			}
-			this.state = dummy.innerHTML;
-			return this;
+			_this.state = dummy.innerHTML;
+			return _this;
 		};
 
 		/* PUBLIC API */
 
-		this.html = html => {
+		this.html = function (html) {
 			if (typeof html === 'undefined') {
-				return this.state;
+				return _this.state;
 			}
-			this.state = html;
-			return this;
+			_this.state = html;
+			return _this;
 		};
 
 		// Add script to head
-		this.addScriptHead = (scriptContent, scriptAttributes) => {
+		this.addScriptHead = function (scriptContent, scriptAttributes) {
 			if (typeof scriptAttributes === "undefined") {
 				scriptAttributes = {};
 			}
-			return this.addScript(scriptContent, scriptAttributes, false);
+			return _this.addScript(scriptContent, scriptAttributes, false);
 		};
 
 		// Add script to body
-		this.addScriptBody = (scriptContent, scriptAttributes) => {
+		this.addScriptBody = function (scriptContent, scriptAttributes) {
 			if (typeof scriptAttributes === "undefined") {
 				scriptAttributes = {};
 			}
-			return this.addScript(scriptContent, scriptAttributes, true);
+			return _this.addScript(scriptContent, scriptAttributes, true);
 		};
 
 		// Add style
-		this.addStyle = cssString => {
+		this.addStyle = function (cssString) {
 			// Create style element
 			var style = document.createElement('style');
 			style.textContent = cssString;
-			return this.appendElementHead(style);
+			return _this.appendElementHead(style);
 		};
 
-		this.addFile = (data, type) => {
+		this.addFile = function (data, type) {
 			switch (type) {
 				case 'html':
-					this.html(data);
+					_this.html(data);
 					break;
 				case 'css':
-					this.addStyle(data);
+					_this.addStyle(data);
 					break;
 				case 'js':
-					this.addScriptBody(data);
+					_this.addScriptBody(data);
 					break;
 			}
 		};
