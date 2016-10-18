@@ -2,12 +2,13 @@
   "name": "liveframe",
   "version": "0.1.0",
   "description": "A simple javascript library to help with manipulation of an iframe. It works by making edits in a dummy DOM before inserting it into the iframe and re-rendering.",
-  "main": "index.js",
+  "main": "dist/liveframe.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "mkdir -p ./dist && ./node_modules/.bin/babel liveframe.js -o dist/liveframe.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/anthonygore/liveframe/issues"
   },
-  "homepage": "https://github.com/anthonygore/liveframe#readme"
+  "homepage": "https://github.com/anthonygore/liveframe#readme",
+  "devDependencies": {
+    "babel-cli": "^6.16.0"
+  }
 }

@@ -2,10 +2,10 @@
   "name": "liveframe",
   "homepage": "https://github.com/anthonygore/liveframe",
   "authors": [
-    "Anthony Gore <anthony@magnum.technology>"
+    "Anthony Gore <agor8684@gmail.com>"
   ],
   "description": "A simple javascript library to help with manipulation of an iframe",
-  "main": "liveframe.js",
+  "main": "dist/liveframe.js",
   "moduleType": [
     "globals"
   ],

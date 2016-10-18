@@ -4,7 +4,7 @@ Liveframe
 A simple javascript library to help with manipulation of an iframe. It works by making edits in a dummy DOM before
 inserting it into the iframe and re-rendering.
 
-Pure javascript, no jQuery required.
+Vanilla JS, no jQuery required.
 
 Use case
 --------
